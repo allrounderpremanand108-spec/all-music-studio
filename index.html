@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Music Studio</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            color: #1db954;
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            color: #b3b3b3;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background-color: #1db954;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            background-color: #1ed760;
+        }
+
+        .btn-record {
+            background-color: #e91e63;
+        }
+
+        .btn-record:hover {
+            background-color: #f44336;
+        }
+
+        .btn-stop {
+            background-color: #555555;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 15px;
+            border-radius: 8px;
+        }
+
+        .effects {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #333;
+        }
+
+        .effects h3 {
+            font-size: 1rem;
+            color: #1db954;
+            margin-bottom: 10px;
+        }
+
+        .control-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        label {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        input[type="range"] {
+            accent-color: #1db954;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🎵 All Music Studio 🎵</h1>
+        <p>Premanand Apps Presentation</p>
+    </header>
+
+    <div class="container">
+        <div class="controls">
+            <button id="recordBtn" class="btn btn-record">🎙️ రికార్డ్ స్టార్ట్ చేయండి</button>
+            <button id="stopBtn" class="btn btn-stop" disabled>⏹️ స్టాప్ చేయండి</button>
+        </div>
+
+        <audio id="audioPlayer" controls></audio>
+
+        <div class="effects">
+            <h3>🎛️ వాయిస్ ఎఫెక్ట్స్</h3>
+            <div class="control-group">
+                <label for="volume">వాల్యూమ్:</label>
+                <input type="range" id="volume" min="0" max="1" step="0.1" value="1">
+            </div>
+            <div class="control-group">
+                <label for="speed">స్పీడ్:</label>
+                <input type="range" id="speed" min="0.5" max="2" step="0.1" value="1">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let mediaRecorder;
+        let audioChunks = [];
+
+        const recordBtn = document.getElementById('recordBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const volumeControl = document.getElementById('volume');
+        const speedControl = document.getElementById('speed');
+
+        recordBtn.addEventListener('click', async () => {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+            mediaRecorder.start();
+
+            audioChunks = [];
+            mediaRecorder.addEventListener("dataavailable", event => {
+                audioChunks.push(event.data);
+            });
+
+            mediaRecorder.addEventListener("stop", () => {
+                const audioBlob = new Blob(audioChunks, { type: 'audio/mp3' });
+                const audioUrl = URL.createObjectURL(audioBlob);
+                audioPlayer.src = audioUrl;
+            });
+
+            recordBtn.disabled = true;
+            stopBtn.disabled = false;
+        });
+
+        stopBtn.addEventListener('click', () => {
+            mediaRecorder.stop();
+            recordBtn.disabled = false;
+            stopBtn.disabled = true;
+        });
+
+        volumeControl.addEventListener('input', (e) => {
+            audioPlayer.volume = e.target.value;
+        });
+
+        speedControl.addEventListener('input', (e) => {
+            audioPlayer.playbackRate = e.target.value;
+        });
+    </script>
+</body>
+</html>
