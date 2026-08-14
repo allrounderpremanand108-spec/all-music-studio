@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="te">
 <head>
@@ -5,193 +6,181 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Music Studio</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { background-color: #121212; color: #ffffff; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; }
+        .studio-card { width: 100%; max-width: 450px; background: #1e1e1e; border-radius: 16px; padding: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.6); border: 1px solid #333; }
+        .header-title { text-align: center; color: #1db954; font-size: 1.4rem; margin-bottom: 20px; font-weight: bold; }
+        
+        /* Top Navigation Header */
+        .top-nav { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 20px; }
+        .nav-btn { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; font-size: 0.95rem; cursor: pointer; transition: 0.3s; }
+        .btn-new-rec { background-color: #e91e63; color: white; }
+        .btn-audio-files { background-color: #2196f3; color: white; }
+
+        /* Screens Setup */
+        .screen { display: none; flex-direction: column; gap: 15px; }
+        .active-screen { display: flex; }
+
+        /* Waveform Animation */
+        .wave-box { height: 70px; background: #000; border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 5px; padding: 10px; }
+        .wave-bar { width: 6px; height: 15px; background: #1db954; border-radius: 3px; }
+        .recording .wave-bar { animation: pulse 1s infinite ease-in-out; }
+        .recording .wave-bar:nth-child(2) { animation-delay: 0.2s; }
+        .recording .wave-bar:nth-child(3) { animation-delay: 0.4s; }
+        .recording .wave-bar:nth-child(4) { animation-delay: 0.1s; }
+        .recording .wave-bar:nth-child(5) { animation-delay: 0.3s; }
+        
+        @keyframes pulse {
+            0%, 100% { height: 15px; }
+            50% { height: 50px; background: #e91e63; }
         }
 
-        body {
-            background-color: #121212;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
+        /* Action Buttons */
+        .control-btns { display: flex; justify-content: space-around; margin-top: 10px; }
+        .action-btn { padding: 10px 20px; border: none; border-radius: 20px; font-weight: bold; cursor: pointer; color: white; }
+        .btn-start { background-color: #4caf50; }
+        .btn-stop { background-color: #f44336; }
+        .btn-ok { background-color: #ff9800; width: 100%; margin-top: 10px; padding: 12px; font-size: 1rem; }
 
-        header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
+        /* Studio Options Panel */
+        .studio-options { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
+        .option-row { display: flex; justify-content: space-between; align-items: center; background: #2a2a2a; padding: 12px; border-radius: 8px; }
+        .option-btn { background: #333; color: #fff; border: 1px solid #555; padding: 6px 12px; border-radius: 6px; cursor: pointer; }
+        .option-btn.active { background: #1db954; border-color: #1db954; }
 
-        header h1 {
-            color: #1db954;
-            font-size: 2rem;
-            margin-bottom: 5px;
-        }
-
-        header p {
-            color: #b3b3b3;
-            font-size: 0.9rem;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 500px;
-            background: #1e1e1e;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-        }
-
-        .controls {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .btn {
-            background-color: #1db954;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            font-size: 1rem;
-            font-weight: bold;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: background 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .btn:hover {
-            background-color: #1ed760;
-        }
-
-        .btn-record {
-            background-color: #e91e63;
-        }
-
-        .btn-record:hover {
-            background-color: #f44336;
-        }
-
-        .btn-stop {
-            background-color: #555555;
-        }
-
-        audio {
-            width: 100%;
-            margin-top: 15px;
-            border-radius: 8px;
-        }
-
-        .effects {
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px solid #333;
-        }
-
-        .effects h3 {
-            font-size: 1rem;
-            color: #1db954;
-            margin-bottom: 10px;
-        }
-
-        .control-group {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        label {
-            font-size: 0.9rem;
-            color: #ccc;
-        }
-
-        input[type="range"] {
-            accent-color: #1db954;
-        }
+        .dual-btn-row { display: flex; gap: 10px; margin-top: 10px; }
+        .half-btn { flex: 1; padding: 12px; background: #3f51b5; color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 0.85rem; text-align: center; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>🎵 All Music Studio 🎵</h1>
-        <p>Premanand Apps Presentation</p>
-    </header>
+<div class="studio-card">
+    <div class="header-title">🎵 All Music Studio 🎵</div>
 
-    <div class="container">
-        <div class="controls">
-            <button id="recordBtn" class="btn btn-record">🎙️ రికార్డ్ స్టార్ట్ చేయండి</button>
-            <button id="stopBtn" class="btn btn-stop" disabled>⏹️ స్టాప్ చేయండి</button>
+    <!-- Top Row Header -->
+    <div class="top-nav">
+        <button class="nav-btn btn-new-rec" onclick="openRecordingScreen()">🎙️ న్యూ రికార్డింగ్</button>
+        <button class="nav-btn btn-audio-files" onclick="openFilesScreen()">📁 ఆడియో ఫైల్స్</button>
+    </div>
+
+    <!-- Screen 1: Home / Default -->
+    <div id="homeScreen" class="screen active-screen">
+        <p style="text-align: center; color: #aaa;">రికార్డింగ్ ప్రారంభించడానికి "న్యూ రికార్డింగ్" పై క్లిక్ చేయండి.</p>
+    </div>
+
+    <!-- Screen 2: Recording Panel -->
+    <div id="recordingScreen" class="screen">
+        <div style="text-align: center; font-size: 2.5rem;">🎙️</div>
+        
+        <!-- Voice Wave Area -->
+        <div class="wave-box" id="waveBox">
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
         </div>
 
-        <audio id="audioPlayer" controls></audio>
+        <div class="control-btns">
+            <button class="action-btn btn-start" id="startBtn" onclick="toggleRecord()">▶️ స్టార్ట్ / పాజ్</button>
+            <button class="action-btn btn-stop" onclick="stopRecord()">⏹️ స్టాప్</button>
+        </div>
 
-        <div class="effects">
-            <h3>🎛️ వాయిస్ ఎఫెక్ట్స్</h3>
-            <div class="control-group">
-                <label for="volume">వాల్యూమ్:</label>
-                <input type="range" id="volume" min="0" max="1" step="0.1" value="1">
+        <audio id="audioPreview" controls style="width:100%; margin-top:10px; display:none;"></audio>
+
+        <button class="action-btn btn-ok" onclick="goToProcessing()">చేసారా? ఓకే నొక్కండి 👍</button>
+    </div>
+
+    <!-- Screen 3: Processing & Effects Panel -->
+    <div id="processingScreen" class="screen">
+        <h3 style="color: #1db954; text-align: center;">🎛️ వాయిస్ ప్రాసెసింగ్</h3>
+
+        <div class="studio-options">
+            <div class="option-row">
+                <span>🚫 నాయిస్ తీసివేయుట</span>
+                <button class="option-btn" onclick="this.classList.toggle('active')">ఆన్ / ఆఫ్</button>
             </div>
-            <div class="control-group">
-                <label for="speed">స్పీడ్:</label>
-                <input type="range" id="speed" min="0.5" max="2" step="0.1" value="1">
+            <div class="option-row">
+                <span>🎙️ డిజిటల్ హై స్టూడియో వాయిస్</span>
+                <button class="option-btn" onclick="this.classList.toggle('active')">ఆన్ / ఆఫ్</button>
             </div>
+        </div>
+
+        <!-- Next Step Instruments Row -->
+        <div class="dual-btn-row">
+            <button class="half-btn">🥁 రిథమ్ & ఇన్స్ట్రుమెంట్స్</button>
+            <button class="half-btn" style="background:#009688;">🎸 ఆల్ లీడ్ ఇన్స్ట్రుమెంట్స్</button>
         </div>
     </div>
 
-    <script>
-        let mediaRecorder;
-        let audioChunks = [];
+    <!-- Screen 4: Files Screen -->
+    <div id="filesScreen" class="screen">
+        <h3 style="color:#2196f3;">📁 సేవ్‌ చేసిన ఆడియో ఫైల్స్</h3>
+        <p style="color:#888;">ఇంకా ఏ ఫైల్స్ సేవ్ చేయలేదు.</p>
+    </div>
+</div>
 
-        const recordBtn = document.getElementById('recordBtn');
-        const stopBtn = document.getElementById('stopBtn');
-        const audioPlayer = document.getElementById('audioPlayer');
-        const volumeControl = document.getElementById('volume');
-        const speedControl = document.getElementById('speed');
+<script>
+    let mediaRecorder;
+    let audioChunks = [];
+    let isRecording = false;
 
-        recordBtn.addEventListener('click', async () => {
+    function hideAllScreens() {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active-screen'));
+    }
+
+    function openRecordingScreen() {
+        hideAllScreens();
+        document.getElementById('recordingScreen').classList.add('active-screen');
+    }
+
+    function openFilesScreen() {
+        hideAllScreens();
+        document.getElementById('filesScreen').classList.add('active-screen');
+    }
+
+    async function toggleRecord() {
+        const waveBox = document.getElementById('waveBox');
+        if (!isRecording) {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             mediaRecorder = new MediaRecorder(stream);
             mediaRecorder.start();
-
             audioChunks = [];
+
             mediaRecorder.addEventListener("dataavailable", event => {
                 audioChunks.push(event.data);
             });
 
+            waveBox.classList.add('recording');
+            isRecording = true;
+        } else {
+            mediaRecorder.pause();
+            waveBox.classList.remove('recording');
+            isRecording = false;
+        }
+    }
+
+    function stopRecord() {
+        if (mediaRecorder) {
+            mediaRecorder.stop();
+            document.getElementById('waveBox').classList.remove('recording');
+            isRecording = false;
+
             mediaRecorder.addEventListener("stop", () => {
                 const audioBlob = new Blob(audioChunks, { type: 'audio/mp3' });
                 const audioUrl = URL.createObjectURL(audioBlob);
-                audioPlayer.src = audioUrl;
+                const audioPreview = document.getElementById('audioPreview');
+                audioPreview.src = audioUrl;
+                audioPreview.style.display = 'block';
             });
+        }
+    }
 
-            recordBtn.disabled = true;
-            stopBtn.disabled = false;
-        });
+    function goToProcessing() {
+        hideAllScreens();
+        document.getElementById('processingScreen').classList.add('active-screen');
+    }
+</script>
 
-        stopBtn.addEventListener('click', () => {
-            mediaRecorder.stop();
-            recordBtn.disabled = false;
-            stopBtn.disabled = true;
-        });
-
-        volumeControl.addEventListener('input', (e) => {
-            audioPlayer.volume = e.target.value;
-        });
-
-        speedControl.addEventListener('input', (e) => {
-            audioPlayer.playbackRate = e.target.value;
-        });
-    </script>
 </body>
 </html>
