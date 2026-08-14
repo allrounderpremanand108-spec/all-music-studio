@@ -13,7 +13,7 @@
         
         /* Top Navigation Header */
         .top-nav { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 20px; }
-        .nav-btn { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; font-size: 0.95rem; cursor: pointer; transition: 0.3s; }
+        .nav-btn { flex: 1; padding: 14px; border: none; border-radius: 10px; font-weight: bold; font-size: 1rem; cursor: pointer; transition: 0.3s; }
         .btn-new-rec { background-color: #e91e63; color: white; }
         .btn-audio-files { background-color: #2196f3; color: white; }
 
@@ -35,21 +35,21 @@
             50% { height: 50px; background: #e91e63; }
         }
 
-        /* Action Buttons */
+        /* Control Buttons */
         .control-btns { display: flex; justify-content: space-around; margin-top: 10px; }
-        .action-btn { padding: 10px 20px; border: none; border-radius: 20px; font-weight: bold; cursor: pointer; color: white; }
+        .action-btn { padding: 12px 20px; border: none; border-radius: 20px; font-weight: bold; cursor: pointer; color: white; font-size: 0.95rem; }
         .btn-start { background-color: #4caf50; }
         .btn-stop { background-color: #f44336; }
-        .btn-ok { background-color: #ff9800; width: 100%; margin-top: 10px; padding: 12px; font-size: 1rem; }
+        .btn-next { background-color: #ff9800; width: 100%; margin-top: 15px; padding: 12px; font-size: 1rem; border: none; border-radius: 8px; color: white; font-weight: bold; cursor: pointer; }
 
         /* Studio Options Panel */
         .studio-options { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
-        .option-row { display: flex; justify-content: space-between; align-items: center; background: #2a2a2a; padding: 12px; border-radius: 8px; }
-        .option-btn { background: #333; color: #fff; border: 1px solid #555; padding: 6px 12px; border-radius: 6px; cursor: pointer; }
+        .option-row { display: flex; justify-content: space-between; align-items: center; background: #2a2a2a; padding: 14px; border-radius: 8px; font-size: 0.95rem; }
+        .option-btn { background: #333; color: #fff; border: 1px solid #555; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-weight: bold; }
         .option-btn.active { background: #1db954; border-color: #1db954; }
 
         .dual-btn-row { display: flex; gap: 10px; margin-top: 10px; }
-        .half-btn { flex: 1; padding: 12px; background: #3f51b5; color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 0.85rem; text-align: center; }
+        .half-btn { flex: 1; padding: 15px; background: #3f51b5; color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 0.9rem; text-align: center; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -57,20 +57,18 @@
 <div class="studio-card">
     <div class="header-title">🎵 All Music Studio 🎵</div>
 
-    <!-- Top Row Header -->
-    <div class="top-nav">
-        <button class="nav-btn btn-new-rec" onclick="openRecordingScreen()">🎙️ న్యూ రికార్డింగ్</button>
-        <button class="nav-btn btn-audio-files" onclick="openFilesScreen()">📁 ఆడియో ఫైల్స్</button>
-    </div>
-
-    <!-- Screen 1: Home / Default -->
+    <!-- Screen 1: Initial Home Page (Only 2 Main Buttons) -->
     <div id="homeScreen" class="screen active-screen">
-        <p style="text-align: center; color: #aaa;">రికార్డింగ్ ప్రారంభించడానికి "న్యూ రికార్డింగ్" పై క్లిక్ చేయండి.</p>
+        <div class="top-nav">
+            <button class="nav-btn btn-new-rec" onclick="openRecordingScreen()">🎙️ న్యూ రికార్డింగ్</button>
+            <button class="nav-btn btn-audio-files" onclick="openFilesScreen()">📁 ఆడియో ఫైల్స్</button>
+        </div>
+        <p style="text-align: center; color: #888; margin-top: 30px;">కొత్త రికార్డింగ్ ప్రారంభించడానికి "న్యూ రికార్డింగ్" పై క్లిక్ చేయండి.</p>
     </div>
 
     <!-- Screen 2: Recording Panel -->
     <div id="recordingScreen" class="screen">
-        <div style="text-align: center; font-size: 2.5rem;">🎙️</div>
+        <h3 style="color: #e91e63; text-align: center;">🎙️ రికార్డింగ్ సెక్షన్</h3>
         
         <!-- Voice Wave Area -->
         <div class="wave-box" id="waveBox">
@@ -86,12 +84,12 @@
             <button class="action-btn btn-stop" onclick="stopRecord()">⏹️ స్టాప్</button>
         </div>
 
-        <audio id="audioPreview" controls style="width:100%; margin-top:10px; display:none;"></audio>
+        <audio id="audioPreview" controls style="width:100%; margin-top:15px; display:none;"></audio>
 
-        <button class="action-btn btn-ok" onclick="goToProcessing()">చేసారా? ఓకే నొక్కండి 👍</button>
+        <button class="btn-next" onclick="goToProcessing()">చేసారా? ఓకే (నెక్స్ట్) ➔</button>
     </div>
 
-    <!-- Screen 3: Processing & Effects Panel -->
+    <!-- Screen 3: Digital Voice Processing Panel -->
     <div id="processingScreen" class="screen">
         <h3 style="color: #1db954; text-align: center;">🎛️ వాయిస్ ప్రాసెసింగ్</h3>
 
@@ -106,17 +104,26 @@
             </div>
         </div>
 
-        <!-- Next Step Instruments Row -->
+        <button class="btn-next" style="background:#1db954;" onclick="goToInstruments()">ఓకే! ఇన్స్ట్రుమెంట్స్‌కి వెళ్లండి ➔</button>
+    </div>
+
+    <!-- Screen 4: Rhythm & Instruments Panel -->
+    <div id="instrumentsScreen" class="screen">
+        <h3 style="color: #2196f3; text-align: center;">🎼 ఇన్స్ట్రుమెంట్స్ సెక్షన్</h3>
+        
         <div class="dual-btn-row">
             <button class="half-btn">🥁 రిథమ్ & ఇన్స్ట్రుమెంట్స్</button>
             <button class="half-btn" style="background:#009688;">🎸 ఆల్ లీడ్ ఇన్స్ట్రుమెంట్స్</button>
         </div>
+
+        <button class="btn-next" style="background:#e91e63;" onclick="goHome()">🏠 హోమ్ పేజీకి వెళ్లండి</button>
     </div>
 
-    <!-- Screen 4: Files Screen -->
+    <!-- Screen 5: Files Screen -->
     <div id="filesScreen" class="screen">
         <h3 style="color:#2196f3;">📁 సేవ్‌ చేసిన ఆడియో ఫైల్స్</h3>
-        <p style="color:#888;">ఇంకా ఏ ఫైల్స్ సేవ్ చేయలేదు.</p>
+        <p style="color:#888; text-align:center; margin-top:20px;">ఇంకా ఏ ఫైల్స్ సేవ్ చేయలేదు.</p>
+        <button class="btn-next" onclick="goHome()">🏠 బ్యాక్</button>
     </div>
 </div>
 
@@ -127,6 +134,11 @@
 
     function hideAllScreens() {
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active-screen'));
+    }
+
+    function goHome() {
+        hideAllScreens();
+        document.getElementById('homeScreen').classList.add('active-screen');
     }
 
     function openRecordingScreen() {
@@ -142,17 +154,21 @@
     async function toggleRecord() {
         const waveBox = document.getElementById('waveBox');
         if (!isRecording) {
-            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            mediaRecorder = new MediaRecorder(stream);
-            mediaRecorder.start();
-            audioChunks = [];
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                mediaRecorder.start();
+                audioChunks = [];
 
-            mediaRecorder.addEventListener("dataavailable", event => {
-                audioChunks.push(event.data);
-            });
+                mediaRecorder.addEventListener("dataavailable", event => {
+                    audioChunks.push(event.data);
+                });
 
-            waveBox.classList.add('recording');
-            isRecording = true;
+                waveBox.classList.add('recording');
+                isRecording = true;
+            } catch(err) {
+                alert("మైక్ పర్మిషన్ ఇవ్వండి.");
+            }
         } else {
             mediaRecorder.pause();
             waveBox.classList.remove('recording');
@@ -179,6 +195,11 @@
     function goToProcessing() {
         hideAllScreens();
         document.getElementById('processingScreen').classList.add('active-screen');
+    }
+
+    function goToInstruments() {
+        hideAllScreens();
+        document.getElementById('instrumentsScreen').classList.add('active-screen');
     }
 </script>
 
