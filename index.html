@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="te">
 <head>
@@ -5,89 +6,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Music Studio</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
-        body { background-color: #121212; color: #ffffff; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; }
-        .studio-card { width: 100%; max-width: 450px; background: #1e1e1e; border-radius: 16px; padding: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.6); border: 1px solid #333; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: #121212; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; }
+        .studio-card { width: 100%; max-width: 450px; background: #1e1e1e; border-radius: 16px; padding: 20px; border: 1px solid #333; }
         .header-title { text-align: center; color: #1db954; font-size: 1.4rem; margin-bottom: 20px; font-weight: bold; }
-        .top-nav { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 20px; }
-        .nav-btn { flex: 1; padding: 14px; border: none; border-radius: 10px; font-weight: bold; font-size: 1rem; cursor: pointer; }
-        .btn-new-rec { background-color: #e91e63; color: white; }
-        .btn-audio-files { background-color: #2196f3; color: white; }
-        .screen { display: none; flex-direction: column; gap: 15px; }
-        .active-screen { display: flex; }
-        .wave-box { height: 70px; background: #000; border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 6px; }
-        .wave-bar { width: 6px; height: 15px; background: #1db954; border-radius: 3px; }
-        .recording .wave-bar { animation: pulse 1s infinite ease-in-out; }
-        .recording .wave-bar:nth-child(2) { animation-delay: 0.2s; }
-        .recording .wave-bar:nth-child(3) { animation-delay: 0.4s; }
-        .recording .wave-bar:nth-child(4) { animation-delay: 0.1s; }
-        .recording .wave-bar:nth-child(5) { animation-delay: 0.3s; }
-        @keyframes pulse { 0%, 100% { height: 15px; } 50% { height: 50px; background: #e91e63; } }
-        .control-btns { display: flex; justify-content: space-around; margin-top: 10px; }
-        .action-btn { padding: 12px 20px; border: none; border-radius: 20px; font-weight: bold; cursor: pointer; color: white; }
-        .btn-start { background-color: #4caf50; }
-        .btn-stop { background-color: #f44336; }
-        .btn-next { background-color: #ff9800; width: 100%; margin-top: 15px; padding: 12px; font-size: 1rem; border: none; border-radius: 8px; color: white; font-weight: bold; cursor: pointer; }
-        .studio-options { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
-        .option-row { display: flex; justify-content: space-between; align-items: center; background: #2a2a2a; padding: 10px 14px; border-radius: 8px; }
-        .option-btn { background: #333; color: #fff; border: 1px solid #555; padding: 8px 14px; border-radius: 6px; cursor: pointer; }
-        .option-btn.active { background: #1db954; border-color: #1db954; }
-        .dual-btn-row { display: flex; gap: 10px; margin-top: 10px; }
-        .half-btn { flex: 1; padding: 15px; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; text-align: center; }
-        .file-list { background: #121212; border-radius: 8px; padding: 10px; max-height: 200px; overflow-y: auto; margin-top: 10px; }
-        .file-item { padding: 8px; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; }
+        .btn-audio-files { background-color: #2196f3; color: white; width: 100%; padding: 14px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        .editor-section { background: #2a2a2a; padding: 15px; border-radius: 12px; margin-top: 15px; }
+        .control-block { background: #1e1e1e; padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid #444; }
+        .control-block label { display: block; font-size: 0.9rem; margin-bottom: 8px; color: #1db954; font-weight: bold; }
+        .slider-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+        .slider-row input[type="range"] { flex: 1; accent-color: #1db954; }
+        .play-check-btn { width: 100%; padding: 8px; background: #333; color: #fff; border: 1px solid #555; border-radius: 6px; cursor: pointer; }
+        input[type="file"] { display: none; }
+        .btn-get-started { width: 100%; padding: 15px; background: #ff9800; color: white; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 15px; }
     </style>
 </head>
 <body>
 <div class="studio-card">
     <div class="header-title">🎵 All Music Studio 🎵</div>
-    <div id="homeScreen" class="screen active-screen">
-        <div class="top-nav">
-            <button class="nav-btn btn-new-rec" onclick="openRecordingScreen()">🎙️ కొత్త రికార్డింగ్</button>
-            <button class="nav-btn btn-audio-files" onclick="openFilesScreen()">📁 ఆడియో ఫైల్స్</button>
+    <button class="btn-audio-files" onclick="document.getElementById('fileInput').click()">📁 ఆడియో ఫైల్స్ ఎంచుకోండి</button>
+    <input type="file" id="fileInput" accept="audio/*" onchange="loadFile(event)">
+    <div class="editor-section">
+        <p id="fileName" style="text-align: center; color: #aaa; margin-bottom: 10px;">ఫైల్ ఇంకా ఎంచుకోలేదు</p>
+        <div class="control-block">
+            <label>🧹 నాయిస్ కంట్రోల్</label>
+            <div class="slider-row"><input type="range" min="0" max="100" value="50"></div>
+            <button class="play-check-btn">▶️ ప్లే చేసి చెక్ చేయి</button>
         </div>
-        <p style="text-align: center; color: #888; margin-top: 30px;">కొత్త రికార్డింగ్ ప్రారంభించండి లేదా ఆడియో ఫైల్స్ చూడండి.</p>
-    </div>
-    <div id="recordingScreen" class="screen">
-        <h3 style="color: #e91e63; text-align: center;">🎙️ రికార్డింగ్ ప్యానెల్</h3>
-        <div class="wave-box" id="waveBox">
-            <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="control-block">
+            <label>🎤 స్టూడియో వాయిస్</label>
+            <div class="slider-row"><input type="range" min="0" max="100" value="70"></div>
+            <button class="play-check-btn">▶️ ప్లే చేసి చెక్ చేయి</button>
         </div>
-        <div class="control-btns">
-            <button class="action-btn btn-start" onclick="startRecording()">▶️ స్టార్ట్</button>
-            <button class="action-btn btn-stop" onclick="stopRecording()">⏹️ స్టాప్</button>
+        <div class="control-block">
+            <label>🔊 బేస్ & టోన్</label>
+            <div class="slider-row"><input type="range" min="0" max="100" value="50"></div>
+            <button class="play-check-btn">▶️ ప్లే చేసి చెక్ చేయి</button>
         </div>
-        <button class="btn-next" onclick="openOptionsScreen()">నెక్స్ట్ (స్టూడియో ఆప్షన్స్) ➔</button>
-    </div>
-    <div id="optionsScreen" class="screen">
-        <h3 style="color: #1db954; text-align: center;">🎛️ స్టూడియో ఆప్షన్స్</h3>
-        <div class="studio-options">
-            <div class="option-row"><span>🔊 నాయిస్ క్యాన్సిలేషన్</span><button class="option-btn active" onclick="toggleOpt(this)">ON</button></div>
-            <div class="option-row"><span>🎤 వాయిస్ క్లారిటీ</span><button class="option-btn active" onclick="toggleOpt(this)">ON</button></div>
-            <div class="option-row"><span>🎼 ఎకో / రీవర్బ్ ఎఫెక్ట్</span><button class="option-btn" onclick="toggleOpt(this)">OFF</button></div>
-            <div class="option-row"><span>🎹 బ్యాక్‌గ్రౌండ్ మ్యూజిక్</span><button class="option-btn" onclick="toggleOpt(this)">OFF</button></div>
-        </div>
-        <div class="dual-btn-row">
-            <button class="half-btn" style="background:#4caf50;" onclick="saveAudio()">💾 రికార్డింగ్ సేవ్ చేయి</button>
-            <button class="half-btn" style="background:#2196f3;" onclick="openFilesScreen()">📁 ఆడియో ఫైల్స్</button>
-        </div>
-    </div>
-    <div id="filesScreen" class="screen">
-        <h3 style="color: #2196f3; text-align: center;">📁 దాచుకున్న ఆడియో ఫైల్స్</h3>
-        <div class="file-list" id="fileList"><div class="file-item"><span>🎵 రికార్డింగ్_1.mp3</span><button style="padding: 4px 8px; background: #4caf50; color: white; border: none; border-radius: 4px;">ప్రాసెస్ చేయి</button></div></div>
-        <button class="btn-next" style="background: #555;" onclick="openHomeScreen()">🏠 హోమ్ పేజీకి వెళ్ళు</button>
+        <button class="btn-get-started" onclick="alert('మ్యూజిక్ ప్రాసెసింగ్ స్టార్ట్ అయ్యింది!')">🚀 గెట్ స్టార్టెడ్ మ్యూజిక్</button>
     </div>
 </div>
 <script>
-    function showScreen(s) { document.querySelectorAll('.screen').forEach(el => el.classList.remove('active-screen')); document.getElementById(s).classList.add('active-screen'); }
-    function openRecordingScreen() { showScreen('recordingScreen'); }
-    function openOptionsScreen() { showScreen('optionsScreen'); }
-    function openFilesScreen() { showScreen('filesScreen'); }
-    function openHomeScreen() { showScreen('homeScreen'); }
-    function startRecording() { document.getElementById('waveBox').classList.add('recording'); }
-    function stopRecording() { document.getElementById('waveBox').classList.remove('recording'); }
-    function toggleOpt(btn) { btn.innerText = (btn.innerText === 'ON' ? 'OFF' : 'ON'); btn.classList.toggle('active'); }
-    function saveAudio() { alert('ఆడియో ఫైల్ సక్సెస్‌ఫుల్‌గా సేవ్ అయింది!'); openFilesScreen(); }
+    function loadFile(e) { document.getElementById('fileName').innerText = "ఎంచుకున్న ఫైల్: " + e.target.files[0].name; }
 </script>
 </body>
 </html>
