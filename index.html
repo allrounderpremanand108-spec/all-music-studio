@@ -1,10 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="te">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Music Studio</title>
-    <!-- ఇక్కడ మీ ఫోటో ఐకాన్ గా సెట్ చేయబడింది -->
     <link rel="icon" type="image/png" href="Screenshot_20191129-233148_02.png">
     <link rel="apple-touch-icon" href="Screenshot_20191129-233148_02.png">
     <style>
@@ -12,44 +12,102 @@
         body { background: #121212; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; }
         .studio-card { width: 100%; max-width: 450px; background: #1e1e1e; border-radius: 16px; padding: 20px; border: 1px solid #333; }
         .header-title { text-align: center; color: #1db954; font-size: 1.4rem; margin-bottom: 20px; font-weight: bold; }
-        .btn-audio-files { background-color: #2196f3; color: white; width: 100%; padding: 14px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        .btn-audio-files { background-color: #2196f3; color: white; width: 100%; padding: 14px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; text-align: center; font-size: 1rem; }
         .editor-section { background: #2a2a2a; padding: 15px; border-radius: 12px; margin-top: 15px; }
         .control-block { background: #1e1e1e; padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid #444; }
         .control-block label { display: block; font-size: 0.9rem; margin-bottom: 8px; color: #1db954; font-weight: bold; }
-        .slider-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-        .slider-row input[type="range"] { flex: 1; accent-color: #1db954; }
-        .play-check-btn { width: 100%; padding: 8px; background: #333; color: #fff; border: 1px solid #555; border-radius: 6px; cursor: pointer; }
+        .slider-row { display: flex; align-items: center; gap: 8px; }
+        .slider-row input[type="range"] { flex: 1; accent-color: #1db954; height: 6px; }
+        .btn-step { background: #333; color: #1db954; border: 1px solid #555; width: 32px; height: 32px; border-radius: 6px; font-size: 1.2rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .btn-step:active { background: #1db954; color: #fff; }
+        .val-display { width: 35px; text-align: center; font-size: 0.85rem; color: #aaa; }
         input[type="file"] { display: none; }
+        audio { width: 100%; margin-top: 10px; border-radius: 8px; }
         .btn-get-started { width: 100%; padding: 15px; background: #ff9800; color: white; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 15px; }
     </style>
 </head>
 <body>
 <div class="studio-card">
     <div class="header-title">🎵 All Music Studio 🎵</div>
+    
     <button class="btn-audio-files" onclick="document.getElementById('fileInput').click()">📁 ఆడియో ఫైల్స్ ఎంచుకోండి</button>
     <input type="file" id="fileInput" accept="audio/*" onchange="loadFile(event)">
+    
     <div class="editor-section">
         <p id="fileName" style="text-align: center; color: #aaa; margin-bottom: 10px;">ఫైల్ ఇంకా ఎంచుకోలేదు</p>
-        <div class="control-block">
+        
+        <audio id="audioPlayer" controls style="display:none;"></audio>
+
+        <!-- నాయిస్ కంట్రోల్ -->
+        <div class="control-block" style="margin-top: 15px;">
             <label>🧹 నాయిస్ కంట్రోల్</label>
-            <div class="slider-row"><input type="range" min="0" max="100" value="50"></div>
-            <button class="play-check-btn">▶️ ప్లే చేసి చెక్ చేయి</button>
+            <div class="slider-row">
+                <button class="btn-step" onclick="changeVal('noise', -5)">-</button>
+                <input type="range" id="noise" min="0" max="100" value="50" oninput="updateVal('noise')">
+                <button class="btn-step" onclick="changeVal('noise', 5)">+</button>
+                <span id="noise-val" class="val-display">50%</span>
+            </div>
         </div>
+
+        <!-- స్టూడియో వాయిస్ -->
         <div class="control-block">
             <label>🎤 స్టూడియో వాయిస్</label>
-            <div class="slider-row"><input type="range" min="0" max="100" value="70"></div>
-            <button class="play-check-btn">▶️ ప్లే చేసి చెక్ చేయి</button>
+            <div class="slider-row">
+                <button class="btn-step" onclick="changeVal('voice', -5)">-</button>
+                <input type="range" id="voice" min="0" max="100" value="70" oninput="updateVal('voice')">
+                <button class="btn-step" onclick="changeVal('voice', 5)">+</button>
+                <span id="voice-val" class="val-display">70%</span>
+            </div>
         </div>
+
+        <!-- బేస్ & టోన్ -->
         <div class="control-block">
             <label>🔊 బేస్ & టోన్</label>
-            <div class="slider-row"><input type="range" min="0" max="100" value="50"></div>
-            <button class="play-check-btn">▶️ ప్లే చేసి చెక్ చేయి</button>
+            <div class="slider-row">
+                <button class="btn-step" onclick="changeVal('bass', -5)">-</button>
+                <input type="range" id="bass" min="0" max="100" value="50" oninput="updateVal('bass')">
+                <button class="btn-step" onclick="changeVal('bass', 5)">+</button>
+                <span id="bass-val" class="val-display">50%</span>
+            </div>
         </div>
-        <button class="btn-get-started" onclick="alert('మ్యూజిక్ ప్రాసెసింగ్ స్టార్ట్ అయ్యింది!')">🚀 గెట్ స్టార్టెడ్ మ్యూజిక్</button>
+        
+        <button class="btn-get-started" onclick="processAudio()">🚀 గెట్ స్టార్టెడ్ మ్యూజిక్</button>
     </div>
 </div>
+
 <script>
-    function loadFile(e) { document.getElementById('fileName').innerText = "ఎంచుకున్న ఫైల్: " + e.target.files[0].name; }
+    function loadFile(event) {
+        const file = event.target.files[0];
+        if (file) {
+            document.getElementById('fileName').innerText = "ఫైల్: " + file.name;
+            const player = document.getElementById('audioPlayer');
+            player.src = URL.createObjectURL(file);
+            player.style.display = "block";
+        }
+    }
+
+    function updateVal(id) {
+        const val = document.getElementById(id).value;
+        document.getElementById(id + '-val').innerText = val + '%';
+    }
+
+    function changeVal(id, step) {
+        const input = document.getElementById(id);
+        let newVal = parseInt(input.value) + step;
+        if (newVal < 0) newVal = 0;
+        if (newVal > 100) newVal = 100;
+        input.value = newVal;
+        updateVal(id);
+    }
+
+    function processAudio() {
+        const fileInput = document.getElementById('fileInput');
+        if (!fileInput.files.length) {
+            alert('దయచేసి ముందుగా ఒక ఆడియో ఫైల్‌ను ఎంచుకోండి!');
+        } else {
+            alert('మ్యూజిక్ ప్రాసెసింగ్ స్టార్ట్ అయ్యింది!');
+        }
+    }
 </script>
 </body>
 </html>
