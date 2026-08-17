@@ -78,3 +78,67 @@
         <p id="status"></p>
     </div>
 </div>
+<!-- 🧱🧱🧱 జావ్రాస్క్రిప్ట్ లాజిక్ ప్రారంభం 🧱🧱🧱 -->
+<script>
+    let audioCtx, source, noiseFilter, voiceFilter, bassFilter;
+
+    function loadFile(event) {
+        const file = event.target.files[0];
+        if (file) {
+            document.getElementById('fileName').innerText = "ఫైల్: " + file.name;
+            const player = document.getElementById('audioPlayer');
+            player.src = URL.createObjectURL(file);
+            player.style.display = "block";
+            if (audioCtx) { audioCtx.close(); audioCtx = null; }
+        }
+    }
+
+    function changeVal(id, step) {
+        const input = document.getElementById(id);
+        let newVal = parseInt(input.value) + step;
+        if (newVal < 0) newVal = 0; if (newVal > 100) newVal = 100;
+        input.value = newVal; updateFilters();
+    }
+
+    function setupAudioEngine() {
+        const player = document.getElementById('audioPlayer');
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        source = audioCtx.createMediaElementSource(player);
+
+        noiseFilter = audioCtx.createBiquadFilter(); noiseFilter.type = "highpass";
+        voiceFilter = audioCtx.createBiquadFilter(); voiceFilter.type = "peaking"; voiceFilter.frequency.value = 2500;
+        bassFilter = audioCtx.createBiquadFilter(); bassFilter.type = "lowshelf"; bassFilter.frequency.value = 200;
+
+        source.connect(noiseFilter);
+        noiseFilter.connect(voiceFilter);
+        voiceFilter.connect(bassFilter);
+        bassFilter.connect(audioCtx.destination);
+    }
+
+    function updateFilters() {
+        const nVal = document.getElementById('noise').value;
+        const vVal = document.getElementById('voice').value;
+        const bVal = document.getElementById('bass').value;
+
+        document.getElementById('noise-val').innerText = nVal + '%';
+        document.getElementById('voice-val').innerText = vVal + '%';
+        document.getElementById('bass-val').innerText = bVal + '%';
+
+        if (audioCtx) {
+            noiseFilter.frequency.value = (nVal / 100) * 800;
+            voiceFilter.gain.value = ((vVal - 50) / 50) * 15;
+            bassFilter.gain.value = ((bVal - 50) / 50) * 12;
+        }
+    }
+
+    function processAudio() {
+        const player = document.getElementById('audioPlayer');
+        if (!player.src) { alert('దయచేసి ముందుగా ఒక ఆడియో ఫైల్‌ను ఎంచుకోండి!'); return; }
+        if (!audioCtx) { setupAudioEngine(); }
+        updateFilters(); player.play();
+        document.getElementById('status').innerText = "✨ అన్ని ఫిల్టర్లు వర్క్ అవుతున్నాయి!";
+    }
+</script>
+<!-- 🧱🧱🧱 జావ్రాస్క్రిప్ట్ లాజిక్ ముగింపు 🧱🧱🧱 -->
+</body>
+</html>
