@@ -1,9 +1,141 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Music Studio</title>
+    <link rel="icon" type="image/png" href="Screenshot_20191129-233148_02.png">
+    <link rel="apple-touch-icon" href="Screenshot_20191129-233148_02.png">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: #121212; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; }
+        .studio-card { width: 100%; max-width: 450px; background: #1e1e1e; border-radius: 16px; padding: 20px; border: 1px solid #333; }
+        .header-title { text-align: center; color: #1db954; font-size: 1.4rem; margin-bottom: 20px; font-weight: bold; }
+        .btn-audio-files { background-color: #2196f3; color: white; width: 100%; padding: 14px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; text-align: center; font-size: 1rem; }
+        .editor-section { background: #2a2a2a; padding: 15px; border-radius: 12px; margin-top: 15px; }
+        .control-block { background: #1e1e1e; padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid #444; }
+        .control-block label { display: block; font-size: 0.9rem; margin-bottom: 8px; color: #1db954; font-weight: bold; }
+        .slider-row { display: flex; align-items: center; gap: 8px; }
+        .slider-row input[type="range"] { flex: 1; accent-color: #1db954; height: 6px; }
+        .btn-step { background: #333; color: #1db954; border: 1px solid #555; width: 32px; height: 32px; border-radius: 6px; font-size: 1.2rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .btn-step:active { background: #1db954; color: #fff; }
+        .val-display { width: 35px; text-align: center; font-size: 0.85rem; color: #aaa; }
+        input[type="file"] { display: none; }
+        audio { width: 100%; margin-top: 10px; border-radius: 8px; }
+        .btn-get-started { width: 100%; padding: 15px; background: #ff9800; color: white; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        #status { text-align: center; margin-top: 10px; font-size: 0.9rem; color: #1db954; font-weight: bold; }
+    </style>
+</head>
+<body>
+<div class="studio-card">
+    <div class="header-title">🎵 All Music Studio 🎵</div>
+    
+    <button class="btn-audio-files" onclick="document.getElementById('fileInput').click()">📁 ఆడియో ఫైల్స్ ఎంచుకోండి</button>
+    <input type="file" id="fileInput" accept="audio/*" onchange="loadFile(event)">
+    
+    <div class="editor-section">
+        <p id="fileName" style="text-align: center; color: #aaa; margin-bottom: 10px;">ఫైల్ ఇంకా ఎంచుకోలేదు</p>
+        
+        <audio id="audioPlayer" controls style="display:none;"></audio>
 
+        <!-- నాయిస్ కంట్రోల్ -->
+        <div class="control-block" style="margin-top: 15px;">
+            <label>🧹 నాయిస్ కంట్రోల్</label>
+            <div class="slider-row">
+                <button class="btn-step" onclick="changeVal('noise', -5)">-</button>
+                <input type="range" id="noise" min="0" max="100" value="50" oninput="updateFilters()">
+                <button class="btn-step" onclick="changeVal('noise', 5)">+</button>
+                <span id="noise-val" class="val-display">50%</span>
+            </div>
+        </div>
+
+        <!-- స్టూడియో వాయిస్ -->
+        <div class="control-block">
+            <label>🎤 స్టూడియో వాయిస్</label>
+            <div class="slider-row">
+                <button class="btn-step" onclick="changeVal('voice', -5)">-</button>
+                <input type="range" id="voice" min="0" max="100" value="70" oninput="updateFilters()">
+                <button class="btn-step" onclick="changeVal('voice', 5)">+</button>
+                <span id="voice-val" class="val-display">70%</span>
+            </div>
+        </div>
+
+        <!-- బేస్ & టోన్ -->
+        <div class="control-block">
+            <label>🔊 బేస్ & టోన్</label>
+            <div class="slider-row">
+                <button class="btn-step" onclick="changeVal('bass', -5)">-</button>
+                <input type="range" id="bass" min="0" max="100" value="50" oninput="updateFilters()">
+                <button class="btn-step" onclick="changeVal('bass', 5)">+</button>
+                <span id="bass-val" class="val-display">50%</span>
+            </div>
+        </div>
+        
+        <button class="btn-get-started" onclick="processAudio()">🚀 ప్రాసెస్ చేసి ప్లే చేయి</button>
+        <p id="status"></p>
+    </div>
+</div>
+
+<script>
+    let audioCtx, source, noiseFilter, voiceFilter, bassFilter;
+
+    function loadFile(event) {
+        const file = event.target.files[0];
+        if (file) {
+            document.getElementById('fileName').innerText = "ఫైల్: " + file.name;
+            const player = document.getElementById('audioPlayer');
+            player.src = URL.createObjectURL(file);
+            player.style.display = "block";
+            document.getElementById('status').innerText = "";
+            if (audioCtx) { audioCtx.close(); audioCtx = null; }
+        }
+    }
+
+    function changeVal(id, step) {
+        const input = document.getElementById(id);
         let newVal = parseInt(input.value) + step;
         if (newVal < 0) newVal = 0;
         if (newVal > 100) newVal = 100;
         input.value = newVal;
-        updateVal(id);
+        updateFilters();
+    }
+
+    function setupAudioEngine() {
+        const player = document.getElementById('audioPlayer');
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        source = audioCtx.createMediaElementSource(player);
+
+        noiseFilter = audioCtx.createBiquadFilter();
+        noiseFilter.type = "highpass";
+
+        voiceFilter = audioCtx.createBiquadFilter();
+        voiceFilter.type = "peaking";
+        voiceFilter.frequency.value = 2500;
+
+        bassFilter = audioCtx.createBiquadFilter();
+        bassFilter.type = "lowshelf";
+        bassFilter.frequency.value = 200;
+
+        source.connect(noiseFilter);
+        noiseFilter.connect(voiceFilter);
+        voiceFilter.connect(bassFilter);
+        bassFilter.connect(audioCtx.destination);
+    }
+
+    function updateFilters() {
+        const nVal = document.getElementById('noise').value;
+        const vVal = document.getElementById('voice').value;
+        const bVal = document.getElementById('bass').value;
+
+        document.getElementById('noise-val').innerText = nVal + '%';
+        document.getElementById('voice-val').innerText = vVal + '%';
+        document.getElementById('bass-val').innerText = bVal + '%';
+
+        if (audioCtx) {
+            noiseFilter.frequency.value = (nVal / 100) * 800;
+            voiceFilter.gain.value = ((vVal - 50) / 50) * 15;
+            bassFilter.gain.value = ((bVal - 50) / 50) * 12;
+        }
     }
 
     function processAudio() {
@@ -12,22 +144,10 @@
             alert('దయచేసి ముందుగా ఒక ఆడియో ఫైల్‌ను ఎంచుకోండి!');
             return;
         }
-
-        if (!audioCtx) {
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            source = audioCtx.createMediaElementSource(player);
-            biquadFilter = audioCtx.createBiquadFilter();
-
-            biquadFilter.type = "highpass";
-            const noiseVal = document.getElementById('noise').value;
-            biquadFilter.frequency.value = (noiseVal / 100) * 1000;
-
-            source.connect(biquadFilter);
-            biquadFilter.connect(audioCtx.destination);
-        }
-
+        if (!audioCtx) { setupAudioEngine(); }
+        updateFilters();
         player.play();
-        document.getElementById('status').innerText = "✨ నాయిస్ ఫిల్టర్ అప్లై అయ్యి ఆడియో ప్లే అవుతోంది!";
+        document.getElementById('status').innerText = "✨ అన్ని ఫిల్టర్లు వర్క్ అవుతున్నాయి!";
     }
 </script>
 </body>
