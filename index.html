@@ -8,17 +8,16 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         
-        /* రాఘవేంద్రరావు కలర్స్ - వైబ్రెంట్ బ్యాక్‌గ్రౌండ్ */
         body { 
-            background: linear-gradient(135deg, #ff007f, #7928ca, #00dfa2, #ffb800);
+            background: linear-gradient(135deg, #4a00e0, #8e2de2, #00c6ff, #11998e);
             background-size: 300% 300%;
-            animation: colorShift 12s ease infinite;
+            animation: colorShift 10s ease infinite;
             color: #fff; 
             display: flex; 
             justify-content: center; 
             align-items: center; 
             min-height: 100vh; 
-            padding: 15px; 
+            padding: 10px; 
         }
 
         @keyframes colorShift {
@@ -27,165 +26,153 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* మెయిన్ కార్డ్ డిజైన్ */
         .studio-card { 
             width: 100%; 
-            max-width: 480px; 
-            background: rgba(15, 12, 41, 0.85); 
-            backdrop-filter: blur(10px);
+            max-width: 500px; 
+            background: rgba(15, 12, 35, 0.92); 
+            backdrop-filter: blur(12px);
             border-radius: 24px; 
-            padding: 20px; 
+            padding: 18px; 
             border: 3px solid #ffeb3b; 
-            box-shadow: 0 0 30px rgba(255, 235, 59, 0.5); 
+            box-shadow: 0 0 25px rgba(255, 235, 59, 0.4); 
         }
 
         .header-title { 
             text-align: center; 
-            background: linear-gradient(45deg, #ffeb3b, #ff007f, #00e5ff); 
+            background: linear-gradient(45deg, #ffeb3b, #00e5ff, #ff007f); 
             -webkit-background-clip: text; 
             -webkit-text-fill-color: transparent; 
-            font-size: 1.8rem; 
+            font-size: 1.6rem; 
             margin-bottom: 15px; 
             font-weight: 900; 
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            white-space: nowrap;
         }
 
-        /* బటన్లు */
         .btn-file { 
             background: linear-gradient(45deg, #00c6ff, #0072ff); 
             color: white; 
             width: 100%; 
-            padding: 16px; 
+            padding: 14px; 
             border: 2px solid #fff; 
-            border-radius: 15px; 
+            border-radius: 14px; 
             font-weight: bold; 
             cursor: pointer; 
-            font-size: 1.1rem; 
+            font-size: 1.05rem; 
             box-shadow: 0 4px 15px rgba(0, 114, 255, 0.4); 
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
+        audio { width: 100%; margin-bottom: 12px; border-radius: 10px; }
+
         .control-block { 
-            background: linear-gradient(135deg, rgba(255, 0, 127, 0.2), rgba(0, 229, 255, 0.2)); 
-            padding: 14px; 
-            border-radius: 15px; 
-            margin-bottom: 12px; 
+            background: rgba(255, 255, 255, 0.08); 
+            padding: 12px; 
+            border-radius: 14px; 
+            margin-bottom: 10px; 
             border: 1.5px solid #ff007f; 
         }
         
         .control-block label { 
             display: block; 
-            font-size: 1rem; 
-            margin-bottom: 8px; 
+            font-size: 0.95rem; 
+            margin-bottom: 6px; 
             color: #ffeb3b; 
             font-weight: bold; 
         }
 
-        .control-block input[type="range"] {
-            width: 100%;
-            accent-color: #ffeb3b;
-        }
+        .control-block input[type="range"] { width: 100%; accent-color: #ffeb3b; }
 
         .btn-go-music { 
             width: 100%; 
-            padding: 18px; 
+            padding: 16px; 
             background: linear-gradient(45deg, #ff007f, #ff9900); 
             color: white; 
             border: 2px solid #ffeb3b; 
-            border-radius: 15px; 
+            border-radius: 14px; 
             font-size: 1.2rem; 
             font-weight: bold; 
             cursor: pointer; 
-            box-shadow: 0 5px 20px rgba(255, 0, 127, 0.6); 
+            box-shadow: 0 5px 20px rgba(255, 0, 127, 0.5); 
             margin-top: 10px;
         }
 
-        /* పేజీ 2 - దీర్ఘచతురస్రాకారపు బాక్సులు */
-        .page-2 { display: none; }
+        .page-2, .page-3 { display: none; }
         
-        .split-container { 
-            display: flex; 
-            gap: 12px; 
-            margin-top: 15px; 
-        }
+        .split-container { display: flex; gap: 10px; margin-top: 15px; }
 
         .big-box { 
             flex: 1; 
-            padding: 22px 10px; 
+            padding: 20px 8px; 
             text-align: center; 
-            border-radius: 16px; 
+            border-radius: 18px; 
             cursor: pointer; 
             font-weight: bold; 
             font-size: 1rem;
             color: #fff;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            transition: transform 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
 
-        .big-box:active { transform: scale(0.96); }
-
-        .box-rhythm { 
-            background: linear-gradient(135deg, #ff007f, #7928ca); 
-            border: 2px solid #ffeb3b; 
-        }
-
-        .box-lead { 
-            background: linear-gradient(135deg, #00b4db, #0083b0); 
-            border: 2px solid #00ff66; 
-        }
-
-        /* రిథమ్ స్క్రోలింగ్ లిస్ట్ */
-        .rhythm-section { 
-            display: none; 
-            margin-top: 20px; 
-            background: rgba(0, 0, 0, 0.4); 
-            padding: 15px; 
-            border-radius: 16px; 
-            border: 1px solid #ff007f;
-        }
+        /* బాక్స్ రంగులు చేంజ్ చేసాం */
+        .box-rhythm { background: linear-gradient(135deg, #00b4db, #0083b0); border: 2.5px solid #00ff66; }
+        .box-lead { background: linear-gradient(135deg, #ff007f, #7928ca); border: 2.5px solid #ffeb3b; }
 
         .scroll-container { 
             display: flex; 
             overflow-x: auto; 
-            gap: 10px; 
-            padding: 10px 0; 
+            gap: 12px; 
+            padding: 10px 5px; 
+            scrollbar-width: thin;
         }
 
-        .inst-card { 
-            min-width: 120px; 
+        .round-inst-card { 
+            min-width: 90px; 
+            height: 90px;
             background: linear-gradient(135deg, #ff9900, #ff0055); 
-            padding: 12px; 
-            border-radius: 12px; 
-            text-align: center; 
-            border: 1.5px solid #fff; 
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #fff; 
             cursor: pointer; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .active-list {
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+            padding: 10px;
+            margin: 10px 0;
+            min-height: 50px;
         }
 
         .btn-ok { 
             width: 100%; 
             padding: 16px; 
-            background: linear-gradient(45deg, #00ff66, #00b0ff); 
+            background: linear-gradient(45deg, #00ff66, #00e5ff); 
             color: #000; 
             border: 2px solid #fff; 
-            border-radius: 15px; 
+            border-radius: 14px; 
             font-size: 1.2rem; 
             font-weight: 900; 
             cursor: pointer; 
-            margin-top: 20px; 
-            box-shadow: 0 4px 15px rgba(0, 255, 102, 0.5); 
+            margin-top: 15px; 
+            box-shadow: 0 4px 20px rgba(0, 255, 102, 0.6); 
         }
     </style>
 </head>
 <body>
 
 <div class="studio-card">
-    <!-- 🎵 పేజీ 1 (వాయిస్ ఎడిటింగ్) -->
+    <!-- 🎵 పేజీ 1: ఆడియో ఎడిటర్ -->
     <div id="page1">
         <div class="header-title">🎵 All Music Studio 🎵</div>
 
         <button class="btn-file" onclick="document.getElementById('fileInput').click()">📁 ఆడియో ఫైల్స్ ఎంచుకోండి</button>
-        <input type="file" id="fileInput" accept="audio/*" style="display:none;" onchange="document.getElementById('fileName').innerText = 'ఫైల్: ' + this.files[0].name">
-        <p id="fileName" style="text-align:center; color:#ffeb3b; margin-bottom:15px; font-weight:bold;">ఫైల్ ఇంకా ఎంచుకోలేదు</p>
+        <input type="file" id="fileInput" accept="audio/*" style="display:none;" onchange="loadFile(event)">
+        <p id="fileName" style="text-align:center; color:#ffeb3b; margin-bottom:8px; font-size:0.9rem;">ఫైల్ ఇంకా ఎంచుకోలేదు</p>
+        
+        <audio id="audioPlayer" controls></audio>
 
         <div class="control-block">
             <label>🧹 నాయిస్ కంట్రోల్</label>
@@ -202,57 +189,120 @@
             <input type="range" value="50">
         </div>
 
-        <!-- గో టు మ్యూజిక్ బటన్ ఒక్కటే ఉంటుంది -->
-        <button class="btn-go-music" onclick="document.getElementById('page1').style.display='none'; document.getElementById('page2').style.display='block';">గో టు మ్యూజిక్ ➔</button>
+        <button class="btn-go-music" onclick="showPage('page2')">గో టు మ్యూజిక్ ➔</button>
     </div>
 
-    <!-- 🥁 పేజీ 2 (రిథమ్ & లీడ్ ఇన్స్ట్రుమెంట్స్) -->
+    <!-- 🎶 పేజీ 2: మ్యూజిక్ హబ్ -->
     <div id="page2" class="page-2">
-        <div class="header-title">🎶 Music Hub 🎶</div>
+        <div class="header-title">🎵 All Music Studio 🎵</div>
 
-        <!-- రెండు దీర్ఘచతురస్రాకారపు బాక్సులు పక్కపక్కనే -->
         <div class="split-container">
-            <div class="big-box box-rhythm" onclick="document.getElementById('rhythmSection').style.display='block'">
-                <div style="font-size:2rem; margin-bottom:5px;">🥁</div>
+            <div class="big-box box-rhythm" onclick="openStudio('rhythm')">
+                <div style="font-size:2.2rem; margin-bottom:5px;">🥁</div>
                 All Rhythm Instruments
             </div>
-            <div class="big-box box-lead">
-                <div style="font-size:2rem; margin-bottom:5px;">🎸</div>
+            <div class="big-box box-lead" onclick="openStudio('lead')">
+                <div style="font-size:2.2rem; margin-bottom:5px;">🎸</div>
                 All Lead Instruments
             </div>
         </div>
 
-        <!-- రిథమ్ క్లిక్ చేయగానే వచ్చే స్క్రోలింగ్ ఆప్షన్లు -->
-        <div id="rhythmSection" class="rhythm-section">
-            <p style="color:#00e5ff; font-weight:bold; margin-bottom:8px;">👉 ఇన్‌స్ట్రుమెంట్ ఎంచుకోండి:</p>
-            <div class="scroll-container">
-                <div class="inst-card" onclick="alert('తబలా యాడ్ అయింది!')">
-                    <div style="font-size:1.5rem;">🥁</div>
-                    <h4>తబలా</h4>
-                    <p style="font-size:0.8rem; color:#ffeb3b;">+ యాడ్ చేయి</p>
-                </div>
-                <div class="inst-card" onclick="alert('ఢోలక్ యాడ్ అయింది!')">
-                    <div style="font-size:1.5rem;">🪘</div>
-                    <h4>ఢోలక్</h4>
-                    <p style="font-size:0.8rem; color:#ffeb3b;">+ యాడ్ చేయి</p>
-                </div>
-                <div class="inst-card" onclick="alert('డ్రమ్స్ యాడ్ అయింది!')">
-                    <div style="font-size:1.5rem;">🎸</div>
-                    <h4>డ్రమ్స్</h4>
-                    <p style="font-size:0.8rem; color:#ffeb3b;">+ యాడ్ చేయి</p>
-                </div>
-            </div>
+        <button class="btn-ok" onclick="showPage('page1')">✅ ఓకే (Done)</button>
+    </div>
 
-            <div class="control-block" style="margin-top:15px;">
-                <label>⚡ టెంపో (Speed & Sync)</label>
-                <input type="range" value="50">
-            </div>
+    <!-- 🥁/🎸 పేజీ 3: ఇన్స్ట్రుమెంట్స్ స్టుడియో -->
+    <div id="page3" class="page-3">
+        <div class="header-title" id="p3Title">🎵 Rhythm Studio 🎵</div>
+
+        <p style="color:#00e5ff; font-size:0.9rem; font-weight:bold; margin-bottom:8px;">👉 ఇన్స్ట్రుమెంట్స్ క్లిక్ చేసి యాడ్ చేయండి:</p>
+        
+        <div class="scroll-container" id="instContainer">
+            <!-- ఇక్కడ ఐకాన్లు లోడ్ అవుతాయి -->
         </div>
 
-        <!-- ఓకే కొడితే ఫస్ట్ పేజీకి వెళ్తుంది -->
-        <button class="btn-ok" onclick="document.getElementById('page2').style.display='none'; document.getElementById('page1').style.display='block';">✅ ఓకే (Done)</button>
+        <div class="active-list">
+            <p style="font-size:0.8rem; color:#ffeb3b; margin-bottom:5px;">ఎంచుకున్నవి:</p>
+            <div id="selectedInsts" style="font-size:0.85rem; color:#fff;">ఏవీ ఎంచుకోలేదు</div>
+        </div>
+
+        <div class="control-block">
+            <label>⚡ టెంపో స్పీడ్ (Tempo)</label>
+            <input type="range" value="50">
+        </div>
+
+        <div class="control-block">
+            <label>🔄 వాయిస్-రిథమ్ సింక్ (Sync Delay)</label>
+            <input type="range" value="50">
+        </div>
+
+        <div class="control-block">
+            <label>🔊 ఇన్‌స్ట్రుమెంట్ వాల్యూమ్ (Volume)</label>
+            <input type="range" value="80">
+        </div>
+
+        <button class="btn-ok" onclick="showPage('page2')">✅ ఓకే (Done)</button>
     </div>
 </div>
+
+<script>
+    function showPage(pageId) {
+        document.getElementById('page1').style.display = 'none';
+        document.getElementById('page2').style.display = 'none';
+        document.getElementById('page3').style.display = 'none';
+        document.getElementById(pageId).style.display = 'block';
+    }
+
+    function loadFile(event) {
+        const file = event.target.files[0];
+        if (file) {
+            document.getElementById('fileName').innerText = "ఫైల్: " + file.name;
+            const player = document.getElementById('audioPlayer');
+            player.src = URL.createObjectURL(file);
+        }
+    }
+
+    let currentSelected = [];
+
+    function openStudio(type) {
+        currentSelected = [];
+        updateSelectedUI();
+        const container = document.getElementById('instContainer');
+        const title = document.getElementById('p3Title');
+
+        if(type === 'rhythm') {
+            title.innerText = "🥁 Rhythm Instruments 🥁";
+            container.innerHTML = `
+                <div class="round-inst-card" onclick="addInst('తబలా')">🥁<span style="font-size:0.7rem;">తబలా</span></div>
+                <div class="round-inst-card" onclick="addInst('ఢోలక్')">🪘<span style="font-size:0.7rem;">ఢోలక్</span></div>
+                <div class="round-inst-card" onclick="addInst('డ్రమ్స్')">🎸<span style="font-size:0.7rem;">డ్రమ్స్</span></div>
+                <div class="round-inst-card" onclick="addInst('కాంగో')">🪇<span style="font-size:0.7rem;">కాంగో</span></div>
+            `;
+        } else {
+            title.innerText = "🎸 Lead Instruments 🎸";
+            container.innerHTML = `
+                <div class="round-inst-card" onclick="addInst('గిటార్')">🎸<span style="font-size:0.7rem;">గిటార్</span></div>
+                <div class="round-inst-card" onclick="addInst('ఫ్లూట్')">🪈<span style="font-size:0.7rem;">ఫ్లూట్</span></div>
+                <div class="round-inst-card" onclick="addInst('వయోలిన్')">🎻<span style="font-size:0.7rem;">వయోలిన్</span></div>
+                <div class="round-inst-card" onclick="addInst('కీబోర్డ్')">🎹<span style="font-size:0.7rem;">కీబోర్డ్</span></div>
+            `;
+        }
+        showPage('page3');
+    }
+
+    function addInst(name) {
+        currentSelected.push(name);
+        updateSelectedUI();
+    }
+
+    function updateSelectedUI() {
+        const div = document.getElementById('selectedInsts');
+        if(currentSelected.length === 0) {
+            div.innerText = "ఏవీ ఎంచుకోలేదు";
+        } else {
+            div.innerText = currentSelected.join(", ");
+        }
+    }
+</script>
 
 </body>
 </html>
