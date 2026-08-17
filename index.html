@@ -1,85 +1,177 @@
+
 <!DOCTYPE html>
 <html lang="te">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Music Studio</title>
-    <!-- 🧱🧱🧱 CSS డిజైన్ ప్రారంభం 🧱🧱🧱 -->
+    <!-- 🧱🧱🧱 1. CSS డిజైన్ (స్టార్ట్) 🧱🧱🧱 -->
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background: #121212; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; }
-        .studio-card { width: 100%; max-width: 450px; background: #1e1e1e; border-radius: 16px; padding: 20px; border: 1px solid #333; }
-        .header-title { text-align: center; color: #1db954; font-size: 1.4rem; margin-bottom: 20px; font-weight: bold; }
-        .btn-audio-files { background-color: #2196f3; color: white; width: 100%; padding: 14px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; text-align: center; font-size: 1rem; }
-        .editor-section { background: #2a2a2a; padding: 15px; border-radius: 12px; margin-top: 15px; }
-        .control-block { background: #1e1e1e; padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid #444; }
-        .control-block label { display: block; font-size: 0.9rem; margin-bottom: 8px; color: #1db954; font-weight: bold; }
+        body { background: linear-gradient(135deg, #0f0c20, #15002b, #26001b); color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; }
+        .studio-card { width: 100%; max-width: 480px; background: rgba(30, 20, 50, 0.95); border-radius: 20px; padding: 20px; border: 2px solid #ff007f; box-shadow: 0 0 25px rgba(255, 0, 127, 0.4); }
+        .header-title { text-align: center; background: linear-gradient(45deg, #ff007f, #ff9900, #00e5ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 1.6rem; margin-bottom: 20px; font-weight: 900; }
+        .btn-audio-files { background: linear-gradient(45deg, #00c6ff, #0072ff); color: white; width: 100%; padding: 14px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; text-align: center; font-size: 1rem; box-shadow: 0 4px 15px rgba(0, 114, 255, 0.4); }
+        .editor-section { background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 15px; margin-top: 15px; border: 1px solid rgba(255,255,255,0.1); }
+        .control-block { background: linear-gradient(90deg, #2b1055, #7597de); padding: 12px; border-radius: 10px; margin-bottom: 12px; border: 1px solid #00e5ff; }
+        .control-block label { display: block; font-size: 0.95rem; margin-bottom: 8px; color: #ffeb3b; font-weight: bold; }
         .slider-row { display: flex; align-items: center; gap: 8px; }
-        .slider-row input[type="range"] { flex: 1; accent-color: #1db954; height: 6px; }
-        .btn-step { background: #333; color: #1db954; border: 1px solid #555; width: 32px; height: 32px; border-radius: 6px; font-size: 1.2rem; font-weight: bold; cursor: pointer; }
-        .val-display { width: 35px; text-align: center; font-size: 0.85rem; color: #aaa; }
+        .slider-row input[type="range"] { flex: 1; accent-color: #ff007f; height: 8px; }
+        .btn-step { background: #ff007f; color: #fff; border: none; width: 34px; height: 34px; border-radius: 8px; font-size: 1.2rem; font-weight: bold; cursor: pointer; }
+        .val-display { width: 40px; text-align: center; font-size: 0.9rem; color: #00e5ff; font-weight: bold; }
         input[type="file"] { display: none; }
         audio { width: 100%; margin-top: 10px; border-radius: 8px; }
-        .btn-get-started { width: 100%; padding: 15px; background: #ff9800; color: white; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 15px; }
-        #status { text-align: center; margin-top: 10px; font-size: 0.9rem; color: #1db954; font-weight: bold; }
-        #fileName { text-align: center; color: #aaa; margin-bottom: 10px; }
+        .btn-get-started { width: 100%; padding: 15px; background: linear-gradient(45deg, #ff9900, #ff0055); color: white; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 15px rgba(255, 0, 85, 0.4); }
+        .btn-go-music { width: 100%; padding: 15px; background: linear-gradient(45deg, #b000ff, #00e5ff); color: white; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 12px; display: none; box-shadow: 0 4px 15px rgba(0, 229, 255, 0.4); }
+        #status { text-align: center; margin-top: 10px; font-size: 0.9rem; color: #00ff66; font-weight: bold; }
+        #fileName { text-align: center; color: #ffeb3b; margin-bottom: 10px; font-weight: 500; }
+        .page-2 { display: none; }
+        .sub-header { background: linear-gradient(45deg, #00ff66, #ffeb3b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 1.2rem; text-align: center; margin-bottom: 15px; font-weight: bold; }
+        
+        /* అడ్డంగా స్క్రోల్ అయ్యే ఇన్స్ట్రుమెంట్స్ ఆప్షన్లు */
+        .scroll-container { display: flex; overflow-x: auto; gap: 12px; padding: 10px 5px; scrollbar-width: thin; }
+        .inst-card { min-width: 130px; background: linear-gradient(135deg, #ff007f, #7928ca); padding: 15px 10px; border-radius: 14px; text-align: center; border: 2px solid #ffeb3b; cursor: pointer; transition: 0.3s; }
+        .inst-card h4 { font-size: 0.95rem; margin-top: 5px; color: #fff; }
+        .inst-card p { font-size: 0.75rem; color: #00e5ff; }
+        
+        /* సెలెక్ట్ అయిన ఇన్స్ట్రుమెంట్స్ లిస్ట్ */
+        .selected-list { margin-top: 15px; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 10px; }
+        .active-inst-item { display: flex; justify-content: space-between; align-items: center; background: linear-gradient(90deg, #11998e, #38ef7d); padding: 8px 12px; border-radius: 8px; margin-bottom: 8px; color: #000; font-weight: bold; }
+        .btn-del { background: #ff0055; color: white; border: none; padding: 4px 8px; border-radius: 5px; cursor: pointer; font-size: 0.8rem; }
+        
+        .btn-back { background: linear-gradient(45deg, #ff4b1f, #ff9068); color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; margin-bottom: 15px; font-weight: bold; }
     </style>
-    <!-- 🧱🧱🧱 CSS డిజైన్ ముగింపు 🧱🧱🧱 -->
+    <!-- 🧱🧱🧱 1. CSS డిజైన్ (ఎండ్) 🧱🧱🧱 -->
 </head>
 <body>
 <div class="studio-card">
-    <!-- 🧱🧱🧱 హెడర్ 🧱🧱🧱 -->
-    <div class="header-title">🎵 All Music Studio 🎵</div>
-
-    <!-- 🧱🧱🧱 ఆడియో ఫైల్ బటన్ 🧱🧱🧱 -->
-    <button class="btn-audio-files" onclick="document.getElementById('fileInput').click()">📁 ఆడియో ఫైల్స్ ఎంచుకోండి</button>
-    <input type="file" id="fileInput" accept="audio/*" onchange="loadFile(event)">
     
-    <div class="editor-section">
-        <p id="fileName">ఫైల్ ఇంకా ఎంచుకోలేదు</p>
-        <audio id="audioPlayer" controls style="display:none;"></audio>
+    <!-- 🧱🧱🧱 2. పేజీ 1 - వాయిస్ ఎడిటర్ (స్టార్ట్) 🧱🧱🧱 -->
+    <div id="page1">
+        <div class="header-title">🎵 All Music Studio 🎵</div>
 
-        <!-- 🧱🧱🧱 1. నాయిస్ కంట్రోల్ 🧱🧱🧱 -->
-        <div class="control-block">
-            <label>🧹 నాయిస్ కంట్రోల్</label>
-            <div class="slider-row">
-                <button class="btn-step" onclick="changeVal('noise', -5)">-</button>
-                <input type="range" id="noise" min="0" max="100" value="50" oninput="updateFilters()">
-                <button class="btn-step" onclick="changeVal('noise', 5)">+</button>
-                <span id="noise-val" class="val-display">50%</span>
+        <button class="btn-audio-files" onclick="document.getElementById('fileInput').click()">📁 ఆడియో ఫైల్స్ ఎంచుకోండి</button>
+        <input type="file" id="fileInput" accept="audio/*" onchange="loadFile(event)">
+        
+        <div class="editor-section">
+            <p id="fileName">ఫైల్ ఇంకా ఎంచుకోలేదు</p>
+            <audio id="audioPlayer" controls style="display:none;"></audio>
+
+            <div class="control-block">
+                <label>🧹 నాయిస్ కంట్రోల్</label>
+                <div class="slider-row">
+                    <button class="btn-step" onclick="changeVal('noise', -5)">-</button>
+                    <input type="range" id="noise" min="0" max="100" value="50" oninput="updateFilters()">
+                    <button class="btn-step" onclick="changeVal('noise', 5)">+</button>
+                    <span id="noise-val" class="val-display">50%</span>
+                </div>
             </div>
-        </div>
 
-        <!-- 🧱🧱🧱 2. వాయిస్ కంట్రోల్ 🧱🧱🧱 -->
-        <div class="control-block">
-            <label>🎤 స్టూడియో వాయిస్</label>
-            <div class="slider-row">
-                <button class="btn-step" onclick="changeVal('voice', -5)">-</button>
-                <input type="range" id="voice" min="0" max="100" value="70" oninput="updateFilters()">
-                <button class="btn-step" onclick="changeVal('voice', 5)">+</button>
-                <span id="voice-val" class="val-display">70%</span>
+            <div class="control-block">
+                <label>🎤 స్టూడియో వాయిస్</label>
+                <div class="slider-row">
+                    <button class="btn-step" onclick="changeVal('voice', -5)">-</button>
+                    <input type="range" id="voice" min="0" max="100" value="70" oninput="updateFilters()">
+                    <button class="btn-step" onclick="changeVal('voice', 5)">+</button>
+                    <span id="voice-val" class="val-display">70%</span>
+                </div>
             </div>
-        </div>
 
-        <!-- 🧱🧱🧱 3. బేస్ కంట్రోల్ 🧱🧱🧱 -->
-        <div class="control-block">
-            <label>🔊 బేస్ & టోన్</label>
-            <div class="slider-row">
-                <button class="btn-step" onclick="changeVal('bass', -5)">-</button>
-                <input type="range" id="bass" min="0" max="100" value="50" oninput="updateFilters()">
-                <button class="btn-step" onclick="changeVal('bass', 5)">+</button>
-                <span id="bass-val" class="val-display">50%</span>
+            <div class="control-block">
+                <label>🔊 బేస్ & టోన్</label>
+                <div class="slider-row">
+                    <button class="btn-step" onclick="changeVal('bass', -5)">-</button>
+                    <input type="range" id="bass" min="0" max="100" value="50" oninput="updateFilters()">
+                    <button class="btn-step" onclick="changeVal('bass', 5)">+</button>
+                    <span id="bass-val" class="val-display">50%</span>
+                </div>
             </div>
-        </div>
 
-        <!-- 🧱🧱🧱 ప్రాసెస్ బటన్ 🧱🧱🧱 -->
-        <button class="btn-get-started" onclick="processAudio()">🚀 ప్రాసెస్ చేసి ప్లే చేయి</button>
-        <p id="status"></p>
+            <button class="btn-get-started" onclick="processAudio()">🚀 ప్రాసెస్ చేసి ప్లే చేయి</button>
+            <button id="btnGoMusic" class="btn-go-music" onclick="goToMusicPage()">🎶 All Rhythm Instruments ➔</button>
+            <p id="status"></p>
+        </div>
     </div>
+    <!-- 🧱🧱🧱 2. పేజీ 1 - వాయిస్ ఎడిటర్ (ఎండ్) 🧱🧱🧱 -->
+    <!-- 🧱🧱🧱 3. పేజీ 2 - మ్యూజిక్ & రిథమ్స్ (స్టార్ట్) 🧱🧱🧱 -->
+    <div id="page2" class="page-2">
+        <button class="btn-back" onclick="goToVoicePage()">⬅ వాయిస్ పేజీకి వెళ్ళు</button>
+        <div class="header-title">🎵 All Music Studio 🎵</div>
+        <div class="sub-header">🥁 All Rhythm Instruments 🥁</div>
+
+        <p style="font-size:0.85rem; color:#00e5ff; text-align:center; margin-bottom:8px;">👉 అడ్డంగా జరిపి ఇన్స్ట్రుమెంట్స్ ఎంచుకోండి:</p>
+
+        <!-- అడ్డంగా స్క్రోల్ అయ్యే ఇన్స్ట్రుమెంట్స్ కార్డ్స్ -->
+        <div class="scroll-container">
+            <div class="inst-card" onclick="addInstrument('తబలా (Tabla)')">
+                <div style="font-size:1.8rem;">🥁</div>
+                <h4>తబలా</h4>
+                <p>+ యాడ్ చేయి</p>
+            </div>
+            <div class="inst-card" onclick="addInstrument('ఢోలక్ (Dholak)')">
+                <div style="font-size:1.8rem;">🪘</div>
+                <h4>ఢోలక్</h4>
+                <p>+ యాడ్ చేయి</p>
+            </div>
+            <div class="inst-card" onclick="addInstrument('డ్రమ్ బీట్స్ (Drums)')">
+                <div style="font-size:1.8rem;">🎸</div>
+                <h4>డ్రమ్ బీట్స్</h4>
+                <p>+ యాడ్ చేయి</p>
+            </div>
+            <div class="inst-card" onclick="addInstrument('కాంగో (Congo)')">
+                <div style="font-size:1.8rem;">🪇</div>
+                <h4>కాంగో</h4>
+                <p>+ యాడ్ చేయి</p>
+            </div>
+            <div class="inst-card" onclick="addInstrument('తంబురా (Tambura)')">
+                <div style="font-size:1.8rem;">🪕</div>
+                <h4>తంబురా</h4>
+                <p>+ యాడ్ చేయి</p>
+            </div>
+        </div>
+
+        <!-- యాడ్ చేసిన ఇన్స్ట్రుమెంట్స్ లిస్ట్ -->
+        <div class="selected-list">
+            <p style="font-size:0.85rem; color:#ffeb3b; margin-bottom:8px;">చేర్చబడిన ఇన్స్ట్రుమెంట్స్:</p>
+            <div id="activeInstContainer">
+                <p id="noInstText" style="font-size:0.8rem; color:#aaa; text-align:center;">ఇంకా ఏవీ యాడ్ చేయలేదు</p>
+            </div>
+        </div>
+
+        <!-- అడ్జస్ట్‌మెంట్ కంట్రోల్స్ (స్పీడ్, సింక్) -->
+        <div class="editor-section">
+            <!-- 1. టెంపో / స్పీడ్ కంట్రోల్ -->
+            <div class="control-block">
+                <label>⚡ రిథమ్ టెంపో (Tempo Speed)</label>
+                <div class="slider-row">
+                    <button class="btn-step" onclick="changeTempo(-5)">-</button>
+                    <input type="range" id="tempo" min="50" max="150" value="100" oninput="updateTempoDisplay()">
+                    <button class="btn-step" onclick="changeTempo(5)">+</button>
+                    <span id="tempo-val" class="val-display">100%</span>
+                </div>
+            </div>
+
+            <!-- 2. వాయిస్ కి మ్యూజిక్ కి వెనక్కి/ముందుకి జరుపుకునే సింక్ -->
+            <div class="control-block">
+                <label>🔄 వాయిస్-రిథమ్ సింక్ (Ahead/Delay)</label>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
+                    <button class="btn-step" style="width:45%; font-size:0.85rem;" onclick="shiftSync(-1)">◀ 1 సెకన్ వెనక్కి</button>
+                    <span id="sync-val" style="color:#00e5ff; font-size:0.85rem; font-weight:bold;">0s</span>
+                    <button class="btn-step" style="width:45%; font-size:0.85rem;" onclick="shiftSync(1)">1 సెకన్ ముందుకు ▶</button>
+                </div>
+            </div>
+
+            <button class="btn-get-started" style="background: linear-gradient(45deg, #00ff66, #00b0ff);" onclick="alert('అన్ని ఇన్స్ట్రుమెంట్స్ మరియు సింక్ సెట్టింగ్స్ ఓకే అయ్యాయి!')">✅ మిక్సింగ్ ఓకే (Finalize)</button>
+        </div>
+    </div>
+    <!-- 🧱🧱🧱 3. పేజీ 2 - మ్యూజిక్ & రిథమ్స్ (ఎండ్) 🧱🧱🧱 -->
+
 </div>
-<!-- 🧱🧱🧱 జావ్రాస్క్రిప్ట్ లాజిక్ ప్రారంభం 🧱🧱🧱 -->
+<!-- 🧱🧱🧱 4. జావాస్క్రిప్ట్ లాజిక్ (స్టార్ట్) 🧱🧱🧱 -->
 <script>
     let audioCtx, source, noiseFilter, voiceFilter, bassFilter;
+    let addedInstruments = [];
+    let currentSync = 0;
 
     function loadFile(event) {
         const file = event.target.files[0];
@@ -135,9 +227,66 @@
         if (!player.src) { alert('దయచేసి ముందుగా ఒక ఆడియో ఫైల్‌ను ఎంచుకోండి!'); return; }
         if (!audioCtx) { setupAudioEngine(); }
         updateFilters(); player.play();
-        document.getElementById('status').innerText = "✨ అన్ని ఫిల్టర్లు వర్క్ అవుతున్నాయి!";
+        document.getElementById('status').innerText = "✨ వాయిస్ ప్రాసెసింగ్ విజయవంతంగా జరిగింది!";
+        document.getElementById('btnGoMusic').style.display = "block";
+    }
+
+    function goToMusicPage() {
+        document.getElementById('page1').style.display = "none";
+        document.getElementById('page2').style.display = "block";
+    }
+
+    function goToVoicePage() {
+        document.getElementById('page2').style.display = "none";
+        document.getElementById('page1').style.display = "block";
+    }
+
+    /* ఇన్స్ట్రుమెంట్స్ యాడ్ / డిలీట్ లాజిక్ */
+    function addInstrument(name) {
+        addedInstruments.push(name);
+        renderInstruments();
+    }
+
+    function removeInstrument(index) {
+        addedInstruments.splice(index, 1);
+        renderInstruments();
+    }
+
+    function renderInstruments() {
+        const container = document.getElementById('activeInstContainer');
+        if (addedInstruments.length === 0) {
+            container.innerHTML = '<p id="noInstText" style="font-size:0.8rem; color:#aaa; text-align:center;">ఇంకా ఏవీ యాడ్ చేయలేదు</p>';
+            return;
+        }
+        let html = '';
+        addedInstruments.forEach((inst, idx) => {
+            html += `<div class="active-inst-item">
+                        <span>🎵 ${inst}</span>
+                        <button class="btn-del" onclick="removeInstrument(${idx})">డిలీట్ ✖</button>
+                     </div>`;
+        });
+        container.innerHTML = html;
+    }
+
+    /* టెంపో & సింక్ లాజిక్ */
+    function changeTempo(step) {
+        const t = document.getElementById('tempo');
+        let val = parseInt(t.value) + step;
+        if(val < 50) val = 50; if(val > 150) val = 150;
+        t.value = val;
+        updateTempoDisplay();
+    }
+
+    function updateTempoDisplay() {
+        const val = document.getElementById('tempo').value;
+        document.getElementById('tempo-val').innerText = val + '%';
+    }
+
+    function shiftSync(sec) {
+        currentSync += sec;
+        document.getElementById('sync-val').innerText = (currentSync > 0 ? '+' : '') + currentSync + 's';
     }
 </script>
-<!-- 🧱🧱🧱 జావ్రాస్క్రిప్ట్ లాజిక్ ముగింపు 🧱🧱🧱 -->
+<!-- 🧱🧱🧱 4. జావాస్క్రిప్ట్ లాజిక్ (ఎండ్) 🧱🧱🧱 -->
 </body>
 </html>
