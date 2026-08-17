@@ -27,3 +27,54 @@
     </style>
     <!-- 🧱🧱🧱 CSS డిజైన్ ముగింపు 🧱🧱🧱 -->
 </head>
+<body>
+<div class="studio-card">
+    <!-- 🧱🧱🧱 హెడర్ 🧱🧱🧱 -->
+    <div class="header-title">🎵 All Music Studio 🎵</div>
+
+    <!-- 🧱🧱🧱 ఆడియో ఫైల్ బటన్ 🧱🧱🧱 -->
+    <button class="btn-audio-files" onclick="document.getElementById('fileInput').click()">📁 ఆడియో ఫైల్స్ ఎంచుకోండి</button>
+    <input type="file" id="fileInput" accept="audio/*" onchange="loadFile(event)">
+    
+    <div class="editor-section">
+        <p id="fileName">ఫైల్ ఇంకా ఎంచుకోలేదు</p>
+        <audio id="audioPlayer" controls style="display:none;"></audio>
+
+        <!-- 🧱🧱🧱 1. నాయిస్ కంట్రోల్ 🧱🧱🧱 -->
+        <div class="control-block">
+            <label>🧹 నాయిస్ కంట్రోల్</label>
+            <div class="slider-row">
+                <button class="btn-step" onclick="changeVal('noise', -5)">-</button>
+                <input type="range" id="noise" min="0" max="100" value="50" oninput="updateFilters()">
+                <button class="btn-step" onclick="changeVal('noise', 5)">+</button>
+                <span id="noise-val" class="val-display">50%</span>
+            </div>
+        </div>
+
+        <!-- 🧱🧱🧱 2. వాయిస్ కంట్రోల్ 🧱🧱🧱 -->
+        <div class="control-block">
+            <label>🎤 స్టూడియో వాయిస్</label>
+            <div class="slider-row">
+                <button class="btn-step" onclick="changeVal('voice', -5)">-</button>
+                <input type="range" id="voice" min="0" max="100" value="70" oninput="updateFilters()">
+                <button class="btn-step" onclick="changeVal('voice', 5)">+</button>
+                <span id="voice-val" class="val-display">70%</span>
+            </div>
+        </div>
+
+        <!-- 🧱🧱🧱 3. బేస్ కంట్రోల్ 🧱🧱🧱 -->
+        <div class="control-block">
+            <label>🔊 బేస్ & టోన్</label>
+            <div class="slider-row">
+                <button class="btn-step" onclick="changeVal('bass', -5)">-</button>
+                <input type="range" id="bass" min="0" max="100" value="50" oninput="updateFilters()">
+                <button class="btn-step" onclick="changeVal('bass', 5)">+</button>
+                <span id="bass-val" class="val-display">50%</span>
+            </div>
+        </div>
+
+        <!-- 🧱🧱🧱 ప్రాసెస్ బటన్ 🧱🧱🧱 -->
+        <button class="btn-get-started" onclick="processAudio()">🚀 ప్రాసెస్ చేసి ప్లే చేయి</button>
+        <p id="status"></p>
+    </div>
+</div>
