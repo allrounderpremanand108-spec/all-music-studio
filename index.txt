@@ -1,0 +1,102 @@
+
+        </div>
+
+        <button class="btn-ok" onclick="showPage('page1')">✅ ఓకే (Done)</button>
+    </div>
+
+    <!-- 🥁/🎸 పేజీ 3: ఇన్స్ట్రుమెంట్స్ స్టుడియో -->
+    <div id="page3" class="page-3">
+        <div class="header-title" id="p3Title">🎵 Rhythm Studio 🎵</div>
+
+        <p style="color:#00e5ff; font-size:0.9rem; font-weight:bold; margin-bottom:8px;">👉 ఇన్స్ట్రుమెంట్స్ క్లిక్ చేసి యాడ్ చేయండి:</p>
+        
+        <div class="scroll-container" id="instContainer">
+            <!-- ఇక్కడ ఐకాన్లు లోడ్ అవుతాయి -->
+        </div>
+
+        <div class="active-list">
+            <p style="font-size:0.8rem; color:#ffeb3b; margin-bottom:5px;">ఎంచుకున్నవి:</p>
+            <div id="selectedInsts" style="font-size:0.85rem; color:#fff;">ఏవీ ఎంచుకోలేదు</div>
+        </div>
+
+        <div class="control-block">
+            <label>⚡ టెంపో స్పీడ్ (Tempo)</label>
+            <input type="range" value="50">
+        </div>
+
+        <div class="control-block">
+            <label>🔄 వాయిస్-రిథమ్ సింక్ (Sync Delay)</label>
+            <input type="range" value="50">
+        </div>
+
+        <div class="control-block">
+            <label>🔊 ఇన్‌స్ట్రుమెంట్ వాల్యూమ్ (Volume)</label>
+            <input type="range" value="80">
+        </div>
+
+        <button class="btn-ok" onclick="showPage('page2')">✅ ఓకే (Done)</button>
+    </div>
+</div>
+
+<script>
+    function showPage(pageId) {
+        document.getElementById('page1').style.display = 'none';
+        document.getElementById('page2').style.display = 'none';
+        document.getElementById('page3').style.display = 'none';
+        document.getElementById(pageId).style.display = 'block';
+    }
+
+    function loadFile(event) {
+        const file = event.target.files[0];
+        if (file) {
+            document.getElementById('fileName').innerText = "ఫైల్: " + file.name;
+            const player = document.getElementById('audioPlayer');
+            player.src = URL.createObjectURL(file);
+        }
+    }
+
+    let currentSelected = [];
+
+    function openStudio(type) {
+        currentSelected = [];
+        updateSelectedUI();
+        const container = document.getElementById('instContainer');
+        const title = document.getElementById('p3Title');
+
+        if(type === 'rhythm') {
+            title.innerText = "🥁 Rhythm Instruments 🥁";
+            container.innerHTML = `
+                <div class="round-inst-card" onclick="addInst('తబలా')">🥁<span style="font-size:0.7rem;">తబలా</span></div>
+                <div class="round-inst-card" onclick="addInst('ఢోలక్')">🪘<span style="font-size:0.7rem;">ఢోలక్</span></div>
+                <div class="round-inst-card" onclick="addInst('డ్రమ్స్')">🎸<span style="font-size:0.7rem;">డ్రమ్స్</span></div>
+                <div class="round-inst-card" onclick="addInst('కాంగో')">🪇<span style="font-size:0.7rem;">కాంగో</span></div>
+            `;
+        } else {
+            title.innerText = "🎸 Lead Instruments 🎸";
+            container.innerHTML = `
+                <div class="round-inst-card" onclick="addInst('గిటార్')">🎸<span style="font-size:0.7rem;">గిటార్</span></div>
+                <div class="round-inst-card" onclick="addInst('ఫ్లూట్')">🪈<span style="font-size:0.7rem;">ఫ్లూట్</span></div>
+                <div class="round-inst-card" onclick="addInst('వయోలిన్')">🎻<span style="font-size:0.7rem;">వయోలిన్</span></div>
+                <div class="round-inst-card" onclick="addInst('కీబోర్డ్')">🎹<span style="font-size:0.7rem;">కీబోర్డ్</span></div>
+            `;
+        }
+        showPage('page3');
+    }
+
+    function addInst(name) {
+        currentSelected.push(name);
+        updateSelectedUI();
+    }
+
+    function updateSelectedUI() {
+        const div = document.getElementById('selectedInsts');
+        if(currentSelected.length === 0) {
+            div.innerText = "ఏవీ ఎంచుకోలేదు";
+        } else {
+            div.innerText = currentSelected.join(", ");
+        }
+    }
+</script>
+
+</body>
+</html>
