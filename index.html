@@ -1,87 +1,130 @@
- <!DOCTYPE html>
-<html lang="te">
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>All Music Studio</title>
-<style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: #0f0c29; color: #fff; font-family: sans-serif; text-align: center; padding: 15px; }
-  .page { display: none; }
-  .active { display: block; }
-  .card { background: rgba(255, 255, 255, 0.08); border-radius: 15px; padding: 20px; margin: 15px auto; max-width: 450px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-  h2 { color: #00e5ff; margin-bottom: 10px; }
-  p { color: #ccc; font-size: 0.95rem; margin-bottom: 15px; }
-  .btn { background: #e52d27; color: white; border: none; padding: 12px 20px; border-radius: 25px; font-size: 1rem; cursor: pointer; font-weight: bold; width: 100%; margin: 8px 0; }
-  .btn-green { background: #11998e; }
-  .btn-nav { background: #3a7bd5; width: 48%; display: inline-block; }
-  .control-group { margin: 15px 0; text-align: left; }
-  label { display: block; font-size: 0.9rem; color: #ffeb3b; margin-bottom: 5px; }
-  input[type="range"] { width: 100%; accent-color: #00e5ff; }
-  .nav-box { display: flex; justify-content: space-between; margin-top: 15px; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Music Studio</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .back-btn {
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            margin: 0;
+            background: linear-gradient(to right, #ff007f, #00dfd8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 30px;
+        }
+
+        .sub-title {
+            color: #cbd5e1;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .red-btn { background-color: #ef4444; }
+        .green-btn { background-color: #22c55e; }
+
+        .play-area {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .play-btn {
+            background: white;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .next-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 
-  <!-- 🎙️ పేజీ 1 -->
-  <div id="page1" class="page active">
-    <h2>🎙️ ఆడియో రికార్డర్</h2>
-    <p>మీ పాట లేదా వాయిస్ రికార్డ్ చేయండి</p>
-    <div class="card">
-      <button class="btn" onclick="alert('రికార్డింగ్ ప్రారంభమైంది...')">🔴 రికార్డ్ స్టార్ట్</button>
-      <button class="btn btn-green" onclick="alert('రికార్డింగ్ ఆగిపోయింది!')">⏹️ స్టాప్ & సేవ్</button>
-    </div>
-    <div class="card">
-      <button class="btn btn-green" onclick="showPage('page2')">తర్వాతి పేజీ: ట్రాక్స్ ➡️</button>
-    </div>
-  </div>
+    <div class="main-container">
+        <!-- Back Arrow -->
+        <div class="back-btn">&#8592;</div>
 
-  <!-- 🎼 పేజీ 2 -->
-  <div id="page2" class="page">
-    <h2>🎼 మ్యూజిక్ ట్రాక్స్</h2>
-    <p>ట్రాక్స్ మిక్సింగ్ సెట్టింగ్స్</p>
-    <div class="card">
-      <div class="control-group">
-        <label>🔊 మెయిన్ వాల్యూమ్:</label>
-        <input type="range" min="0" max="100" value="80">
-      </div>
-      <div class="control-group">
-        <label>🎸 బ్యాక్‌గ్రౌండ్ మ్యూజిక్:</label>
-        <input type="range" min="0" max="100" value="50">
-      </div>
-    </div>
-    <div class="card nav-box">
-      <button class="btn btn-nav" onclick="showPage('page1')">⬅️ వెనక్కి</button>
-      <button class="btn btn-nav btn-green" onclick="showPage('page3')">ముందుకు ➡️</button>
-    </div>
-  </div>
+        <!-- Title Section -->
+        <div class="header">
+            <h1>ALL MUSIC STUDIO</h1>
+            <div class="sub-title">Premanand Apps</div>
+        </div>
 
-  <!-- 🥁 పేజీ 3 -->
-  <div id="page3" class="page">
-    <h2>🥁 రిథమ్ & ఇన్స్ట్రుమెంట్స్</h2>
-    <p>రిథమ్ స్పీడ్ సరిచేసుకోండి</p>
-    <div class="card">
-      <div class="control-group">
-        <label>⚡ టెంపో స్పీడ్ (Tempo):</label>
-        <input type="range" min="60" max="200" value="120">
-      </div>
-      <div class="control-group">
-        <label>📻 వాయిస్-రిథమ్ సింక్ (Sync):</label>
-        <input type="range" min="0" max="100" value="50">
-      </div>
-    </div>
-    <div class="card nav-box">
-      <button class="btn btn-nav" onclick="showPage('page2')">⬅️ వెనక్కి</button>
-      <button class="btn btn-nav btn-green" onclick="alert('అన్ని సెట్టింగ్స్ పూర్తయ్యాయి!')">✅ డన్</button>
-    </div>
-  </div>
+        <!-- New Record & Audio Files -->
+        <div class="btn-row">
+            <button class="btn red-btn">New Record</button>
+            <button class="btn green-btn">Audio Files</button>
+        </div>
 
-<script>
-  function showPage(pageId) {
-    document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-    document.getElementById(pageId).classList.add('active');
-  }
-</script>
+        <!-- Play Button -->
+        <div class="play-area">
+            <button class="play-btn">&#9654;</button>
+        </div>
+
+        <!-- Next Button -->
+        <button class="next-btn">NEXT</button>
+    </div>
 
 </body>
 </html>
