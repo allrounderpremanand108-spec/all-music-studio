@@ -25,7 +25,7 @@ jobs:
       run: ./bundleRelease
 
     - name: Upload AAB Artifact
-      uses: actions/upload-artifact@v3
+      ఆ: actions/upload-artifact@v3
       with:
         name: app-release-bundle
         path: app/build/outputs/bundle/release/app-release.aab
